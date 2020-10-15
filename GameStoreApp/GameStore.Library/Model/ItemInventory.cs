@@ -6,7 +6,7 @@ namespace GameStore.Library.Model
 {
     public class ItemInventory
     {
-        public int ItemID { get; set; }
+        public int InventoryID { get; set; }
 
         public int StoreID { get; set; }
 
