@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GameStore.Library.Interface
+namespace GameStore.Library.Model
 {
-    class Game
+    public class Game
     {
         private string _gameName;
         private decimal _price;
@@ -32,6 +32,5 @@ namespace GameStore.Library.Interface
                 _price = value;
             }
         }
-
     }
 }

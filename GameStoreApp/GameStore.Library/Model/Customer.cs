@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GameStore.Library.Interface
+namespace GameStore.Library.Model
 {
-    class Customer
+    public class Customer
     {
         private string _firstName;
         private string _lastName;
 
         public int CustomerID { get; set; }
-        public string FirstName {
+        public string FirstName
+        {
             get => _firstName;
             set
             {
@@ -35,6 +36,7 @@ namespace GameStore.Library.Interface
             }
         }
 
+        //for game order history
         public List<GameOrder> GameOrders { get; set; } = new List<GameOrder>();
 
     }

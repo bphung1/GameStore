@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GameStore.Library.Interface
+namespace GameStore.Library.Model
 {
-    class ItemInventory
+    public class ItemInventory
     {
         public int ItemID { get; set; }
 

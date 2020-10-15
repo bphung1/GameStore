@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GameStore.Library.Interface
+namespace GameStore.Library.Model
 {
-    class StoreLocation
+    public class StoreLocation
     {
         private string _storeName;
         private string _state;
@@ -27,11 +27,11 @@ namespace GameStore.Library.Interface
         public string State
         {
             get => _state;
-            set 
+            set
             {
                 if (value.Length == 0)
                 {
-                    throw new ArgumentException("State must not be empty", nameof (value));
+                    throw new ArgumentException("State must not be empty", nameof(value));
                 }
                 _state = value;
             }

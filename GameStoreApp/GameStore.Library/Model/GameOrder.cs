@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GameStore.Library.Interface
+namespace GameStore.Library.Model
 {
-    class GameOrder
+    public class GameOrder
     {
-
         public int OrderID { get; set; }
 
         public int CustomerID { get; set; }
@@ -19,7 +18,7 @@ namespace GameStore.Library.Interface
 
         public int Quantity { get; set; }
 
-        public Game Game{get; set;}
+        public Game Game { get; set; }
 
         public StoreLocation Store { get; set; }
     }
