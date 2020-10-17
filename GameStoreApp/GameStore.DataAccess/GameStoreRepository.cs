@@ -1,6 +1,7 @@
 ﻿using GameStore.DataAccess.Entities;
 using GameStore.Library.Interface;
 using GameStore.Library.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -35,7 +36,21 @@ namespace GameStore.DataAccess
 
         public Library.Model.Customer GetCustomerById(int customerId)
         {
-            throw new NotImplementedException();
+            //Entities.Customer customer = _dbContext.Customer.Include(c => c.GameOrder)
+            //    .AsNoTracking().First(r => r.CustomerId == customerId);
+            //return Mapper.Map(customer);
+            var customer = _dbContext.Customer.FirstOrDefault(c => c.CustomerId.Equals(customerId));
+            if (customer == null)
+            {
+                return null;
+            }
+
+            return new Library.Model.Customer
+            { 
+                CustomerID = customer.CustomerId,
+                FirstName = customer.FirstName,
+                LastName = customer.LastName
+            };
         }
 
         public IEnumerable<Library.Model.Customer> GetCustomers(string search = null)
@@ -45,47 +60,93 @@ namespace GameStore.DataAccess
 
         public Library.Model.Game GetGameById(int gameId)
         {
-            throw new NotImplementedException();
+            var game = _dbContext.Game.FirstOrDefault(g => g.GameId.Equals(gameId));
+            if (game == null)
+            {
+                return null;
+            }
+
+            return new Library.Model.Game
+            {
+                GameID = game.GameId,
+                GameName = game.GameName,
+                Price = (decimal)game.Price
+            };
         }
 
         public Library.Model.GameOrder GetGameOrderById(int gameOrderId)
         {
-            throw new NotImplementedException();
+            Entities.GameOrder gameOrder = _dbContext.GameOrder.AsNoTracking()
+                .First(r => r.OrderId == gameOrderId);
+            return Mapper.Map(gameOrder);
         }
 
         public IEnumerable<Library.Model.GameOrder> GetGameOrders()
         {
-            throw new NotImplementedException();
+            return Mapper.Map(_dbContext.GameOrder);
         }
 
         public IEnumerable<Library.Model.GameOrder> GetGameOrdersByCustomerId(int customerId)
         {
-            throw new NotImplementedException();
+            return Mapper.Map(_dbContext.GameOrder.Where(id => id.CustomerId == customerId).ToList());
         }
 
         public IEnumerable<Library.Model.Game> GetGames()
         {
-            throw new NotImplementedException();
+            return Mapper.Map(_dbContext.Game);
         }
 
         public Library.Model.GameOrder GetRecentGameOrderByCusomterId(int customerId)
         {
-            throw new NotImplementedException();
+            var order = _dbContext.GameOrder.OrderByDescending(o => o.OrderId).FirstOrDefault(o => o.CustomerId.Equals(customerId));
+            if (order == null)
+            {
+                return null;
+            }
+
+            return new Library.Model.GameOrder
+            { 
+                OrderID = order.OrderId,
+                OrderTime = order.OrderTime,
+                CustomerID = order.CustomerId,
+                StoreID = order.StoreId
+            };
         }
 
         public Library.Model.StoreLocation GetStoreById(int storeId)
         {
-            throw new NotImplementedException();
+            Entities.StoreLocation storeLocation = _dbContext.StoreLocation.AsNoTracking()
+                .First(r => r.StoreId == storeId);
+            return Mapper.Map(storeLocation);
         }
 
         public IEnumerable<Library.Model.StoreLocation> GetStoreLocations(string search = null)
         {
-            throw new NotImplementedException();
+            return Mapper.Map(_dbContext.StoreLocation);
         }
 
-        public int StoreIdFromOrderId(int orderId)
+        public int GetStoreIdFromOrderId(int orderId)
         {
-            throw new NotImplementedException();
+            Entities.GameOrder gameOrder = _dbContext.GameOrder.AsNoTracking()
+                .First(r => r.OrderId == orderId);
+            return gameOrder.StoreId;
+        }
+
+        public void AddOrder(Library.Model.GameOrder gameOrder)
+        {
+            _dbContext.Add(Mapper.Map(gameOrder));
+        }
+
+        public void Save()
+        {
+            _dbContext.SaveChanges();
+        }
+
+        public void CreateOrder(Library.Model.GameOrder gameOrder)
+        {
+            var ordeEntity = _dbContext.GameOrder;
+            Entities.GameOrder newOrderEntity = Mapper.Map(gameOrder);
+            _dbContext.SaveChanges();
         }
     }
 }

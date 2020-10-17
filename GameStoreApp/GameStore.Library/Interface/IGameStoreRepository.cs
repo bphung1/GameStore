@@ -18,7 +18,9 @@ namespace GameStore.Library.Interface
         GameOrder GetRecentGameOrderByCusomterId(int customerId);
         IEnumerable<StoreLocation> GetStoreLocations(string search = null);
         StoreLocation GetStoreById(int storeId);
-        int StoreIdFromOrderId(int orderId);
-
+        int GetStoreIdFromOrderId(int orderId);
+        void AddOrder(GameOrder gameOrder);
+        void Save();
+        void CreateOrder(GameOrder gameOrder);
     }
 }
