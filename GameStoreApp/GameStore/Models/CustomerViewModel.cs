@@ -10,7 +10,7 @@ namespace GameStore.WebUI.Models
     public class CustomerViewModel
     {
         [Display(Name = "ID")]
-        public int CustomerId { get; set }
+        public int CustomerId { get; set; }
 
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
