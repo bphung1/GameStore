@@ -1,4 +1,4 @@
-﻿using GameStore.DataAccess.Entities;
+﻿using GameStore.Library.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

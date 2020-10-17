@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GameStore.Library.Interface;
+using GameStore.Library.Model;
+using GameStore.WebUI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,16 +12,40 @@ namespace GameStore.WebUI.Controllers
 {
     public class CustomerController : Controller
     {
+        public IGameStoreRepository Repo { get; }
+
+        public CustomerController(IGameStoreRepository repo) =>
+            Repo = repo ?? throw new ArgumentNullException(nameof(repo));
+
         // GET: CustomerController
-        public ActionResult Index()
+        public ActionResult Index([FromQuery] string search = "")
         {
-            return View();
+            IEnumerable<Customer> customers = Repo.GetCustomers(search);
+            IEnumerable<CustomerViewModel> viewModels = customers.Select(x => new CustomerViewModel
+            {
+                CustomerId = x.CustomerID,
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                GameOrders = x.GameOrders.Select(y => new GameOrderViewModel())
+
+            }) ;
+
+            return View(viewModels);
         }
 
         // GET: CustomerController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Customer customer = Repo.GetCustomerById(id);
+            var viewModels = new CustomerViewModel
+            { 
+                CustomerId = customer.CustomerID,
+                FirstName = customer.FirstName,
+                LastName = customer.LastName,
+                ListOfGameOrder = Repo.GetGameOrdersByCustomerId(customer.CustomerID)
+            };
+
+            return View(viewModels);
         }
 
         // GET: CustomerController/Create
