@@ -10,7 +10,7 @@ using System.Text;
 
 namespace GameStore.DataAccess
 {
-    class GameStoreRepository : IGameStoreRepository
+    public class GameStoreRepository : IGameStoreRepository
     {
         private readonly GameStoreMVCContext _dbContext;
 
