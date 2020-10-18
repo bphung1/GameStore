@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GameStore.Library.Interface;
+using GameStore.Library.Model;
+using GameStore.WebUI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +12,21 @@ namespace GameStore.WebUI.Controllers
 {
     public class GameController : Controller
     {
+        public IGameStoreRepository Repo { get; }
+
+        public GameController(IGameStoreRepository repo) =>
+            Repo = repo ?? throw new ArgumentNullException(nameof(repo));
         // GET: GameController
         public ActionResult Index()
         {
-            return View();
+            IEnumerable<Game> games = Repo.GetGames();
+            IEnumerable<GameViewModel> viewModels = games.Select(x => new GameViewModel
+            { 
+                GameID = x.GameID,
+                GameName = x.GameName,
+                Price = x.Price
+            });
+            return View(viewModels);
         }
 
         // GET: GameController/Details/5

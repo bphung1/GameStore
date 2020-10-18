@@ -18,6 +18,9 @@ namespace GameStore.WebUI.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
+        [Display(Name = "Store Name")]
+        public StoreLocation StoreLocation { get; set; }
+
         [Display(Name = "Order Id")]
         public IEnumerable<GameOrder> ListOfGameOrder { get; set; }
 

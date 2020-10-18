@@ -10,12 +10,13 @@ namespace GameStore.Library.Interface
         IEnumerable<Customer> GetCustomers(string search = null);
         Customer GetCustomer(string firstName, string lastName);
         Customer GetCustomerById(int customerId);
+        int CustomerIdFromOrderId(int orderId);
         IEnumerable<Game> GetGames();
         Game GetGameById(int gameId);
         IEnumerable<GameOrder> GetGameOrders();
         IEnumerable<GameOrder> GetGameOrdersByCustomerId(int customerId);
         GameOrder GetGameOrderById(int gameOrderId);
-        GameOrder GetRecentGameOrderByCusomterId(int customerId);
+        GameOrder GetRecentGameOrderByCustomerId(int customerId);
         IEnumerable<StoreLocation> GetStoreLocations(string search = null);
         StoreLocation GetStoreById(int storeId);
         int GetStoreIdFromOrderId(int orderId);

@@ -27,7 +27,7 @@ namespace GameStore.WebUI.Models
 
 
 
-        public List<int> GameIds = new List<int>();
+        //public List<int> GameIds = new List<int>();
 
         [Display(Name = "List Of Games")]
         public IEnumerable<Game> ListOfGames { get; set; }

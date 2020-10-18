@@ -96,7 +96,7 @@ namespace GameStore.DataAccess
             return Mapper.Map(_dbContext.Game);
         }
 
-        public Library.Model.GameOrder GetRecentGameOrderByCusomterId(int customerId)
+        public Library.Model.GameOrder GetRecentGameOrderByCustomerId(int customerId)
         {
             var order = _dbContext.GameOrder.OrderByDescending(o => o.OrderId).FirstOrDefault(o => o.CustomerId.Equals(customerId));
             if (order == null)
@@ -106,10 +106,12 @@ namespace GameStore.DataAccess
 
             return new Library.Model.GameOrder
             { 
+                GameID = order.GameId,
                 OrderID = order.OrderId,
                 OrderTime = order.OrderTime,
                 CustomerID = order.CustomerId,
-                StoreID = order.StoreId
+                StoreID = order.StoreId,
+                Quantity = (int)order.Quantity
             };
         }
 
@@ -147,6 +149,13 @@ namespace GameStore.DataAccess
             var ordeEntity = _dbContext.GameOrder;
             Entities.GameOrder newOrderEntity = Mapper.Map(gameOrder);
             _dbContext.SaveChanges();
+        }
+
+        public int CustomerIdFromOrderId(int orderId)
+        {
+            Entities.GameOrder gameOrder = _dbContext.GameOrder.AsNoTracking()
+                .First(r => r.OrderId == orderId);
+            return gameOrder.CustomerId;
         }
     }
 }

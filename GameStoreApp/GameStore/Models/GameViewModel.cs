@@ -15,6 +15,6 @@ namespace GameStore.WebUI.Models
         public string GameName { get; set; }
 
         [Display(Name = "Price")]
-        public int Price { get; set; }
+        public decimal Price { get; set; }
     }
 }

@@ -37,8 +37,9 @@ namespace GameStore.WebUI.Controllers
         public ActionResult Details(int id)
         {
             Customer customer = Repo.GetCustomerById(id);
+
             var viewModels = new CustomerViewModel
-            { 
+            {
                 CustomerId = customer.CustomerID,
                 FirstName = customer.FirstName,
                 LastName = customer.LastName,
