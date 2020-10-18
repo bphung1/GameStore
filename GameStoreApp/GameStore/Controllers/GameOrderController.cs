@@ -7,6 +7,8 @@ using GameStore.Library.Model;
 using GameStore.WebUI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace GameStore.WebUI.Controllers
 {
@@ -71,14 +73,36 @@ namespace GameStore.WebUI.Controllers
             {
                 qty.Add(i + 1);
             }
+
+            var storeList = new List<SelectListItem>();
+            foreach (var store in Repo.GetStoreLocations())
+            {
+                storeList.Add(new SelectListItem
+                { 
+                    Value = store.StoreName.ToString(), Text = store.StoreName
+                });
+            }
+
+            var gameList = new List<SelectListItem>();
+            foreach (var item in Repo.GetGames())
+            {
+                gameList.Add(new SelectListItem
+                {
+                    Value = item.GameName.ToString(),
+                    Text = item.GameName
+                });
+            }
+
             var gameOrder = new GameOrderViewModel
             {
                 GameID = game.GameID,
                 ChooseQuantity = qty,
                 Customer = Repo.GetCustomerById(customerId),
                 StoreLocation = Repo.GetStoreById(storeId),
-                ListOfGames = Repo.GetGames(),
-                CustomerId = customerId
+                ListOfGames = gameList,
+                CustomerId = customerId,
+                ListOfStores = storeList,
+                OrderTime = DateTime.Now
             };
 
             return View(gameOrder);

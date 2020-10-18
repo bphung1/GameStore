@@ -1,4 +1,5 @@
 ﻿using GameStore.Library.Model;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -19,6 +20,7 @@ namespace GameStore.WebUI.Models
 
         [Display(Name = "Store")]
         public int StoreId { get; set; }
+        public List<SelectListItem> ListOfStores { get; set; }
 
         public StoreLocation StoreLocation { get; set; }
 
@@ -26,11 +28,8 @@ namespace GameStore.WebUI.Models
         public DateTime OrderTime { get; set; }
 
 
-
-        //public List<int> GameIds = new List<int>();
-
         [Display(Name = "List Of Games")]
-        public IEnumerable<Game> ListOfGames { get; set; }
+        public IEnumerable<SelectListItem> ListOfGames { get; set; }
 
         public Game Game { get; set; }
 
