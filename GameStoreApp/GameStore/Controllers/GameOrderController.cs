@@ -67,13 +67,6 @@ namespace GameStore.WebUI.Controllers
             var storeId = Repo.GetStoreIdFromOrderId(order.OrderID);
             var game = Repo.GetGameById(order.GameID);
 
-            List<int> qty = new List<int>();
-            qty.Add(0);
-            for (int i = 0; i < 10; i++)
-            {
-                qty.Add(i + 1);
-            }
-
             var storeList = new List<SelectListItem>();
             foreach (var store in Repo.GetStoreLocations())
             {
@@ -96,7 +89,6 @@ namespace GameStore.WebUI.Controllers
             var gameOrder = new GameOrderViewModel
             {
                 GameID = game.GameID,
-                ChooseQuantity = qty,
                 Customer = Repo.GetCustomerById(customerId),
                 StoreLocation = Repo.GetStoreById(storeId),
                 ListOfGames = gameList,

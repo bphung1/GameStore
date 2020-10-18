@@ -35,8 +35,6 @@ namespace GameStore.WebUI.Models
 
 
         [Display(Name = "Quantity")]
-        public IEnumerable<int> ChooseQuantity { get; set; }
-
         public int Quantity { get; set; }
 
         public List<int> QuantityList { get; set; }
