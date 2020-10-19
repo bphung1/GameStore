@@ -23,13 +23,6 @@ steps:
     projects: '**/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
 
-- task: SonarCloudAnalyze@1
-  inputs: {}
-
-- task: SonarCloudPublish@1
-  inputs:
-    pollingTimeoutSec: '60'
-
 # ...
 # do this after you've built your app, near the end of your pipeline in most cases
 # for example, you do this before you deploy to an Azure web app on Windows
@@ -43,9 +36,9 @@ steps:
 - task: AzureRmWebAppDeployment@4
   inputs:
     ConnectionType: 'AzureRM'
-    azureSubscription: 'Project1'
+    azureSubscription: 'GameStore'
     appType: 'webApp'
-    WebAppName: '1904-bphung-GameStore'
+    WebAppName: 'GameStoreApp'
     packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'
 
 # - task: AzureRmWebAppDeployment@3
