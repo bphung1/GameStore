@@ -13,6 +13,7 @@ namespace GameStore.Library.Interface
         int CustomerIdFromOrderId(int orderId);
         IEnumerable<Game> GetGames();
         Game GetGameById(int gameId);
+        Game GetGameByGameName(string gameName);
         IEnumerable<GameOrder> GetGameOrders();
         IEnumerable<GameOrder> GetGameOrdersByCustomerId(int customerId);
         GameOrder GetGameOrderById(int gameOrderId);
@@ -20,6 +21,7 @@ namespace GameStore.Library.Interface
         IEnumerable<StoreLocation> GetStoreLocations(string search = null);
         StoreLocation GetStoreById(int storeId);
         int GetStoreIdFromOrderId(int orderId);
+        StoreLocation GetStoreByName(string storeName);
         void AddOrder(GameOrder gameOrder);
         void Save();
         void CreateOrder(GameOrder gameOrder);

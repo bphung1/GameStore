@@ -96,6 +96,13 @@ namespace GameStore.DataAccess
             return Mapper.Map(_dbContext.Game);
         }
 
+        public Library.Model.Game GetGameByGameName(string gameName) 
+        {
+            Entities.Game game = _dbContext.Game.AsNoTracking()
+                .First(r => r.GameName == gameName);
+            return Mapper.Map(game);
+        }
+
         public Library.Model.GameOrder GetRecentGameOrderByCustomerId(int customerId)
         {
             var order = _dbContext.GameOrder.OrderByDescending(o => o.OrderId).FirstOrDefault(o => o.CustomerId.Equals(customerId));
@@ -125,6 +132,12 @@ namespace GameStore.DataAccess
         public IEnumerable<Library.Model.StoreLocation> GetStoreLocations(string search = null)
         {
             return Mapper.Map(_dbContext.StoreLocation);
+        }
+        public Library.Model.StoreLocation GetStoreByName(string storeName)
+        {
+            Entities.StoreLocation storeLocation = _dbContext.StoreLocation.AsNoTracking()
+                .First(r => r.StoreName == storeName);
+            return Mapper.Map(storeLocation);
         }
 
         public int GetStoreIdFromOrderId(int orderId)

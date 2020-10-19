@@ -18,34 +18,29 @@
             </div>
             <div class="form-group">
                 <td>
-                    @Html.DropDownList("GameOrderViewModel", Model.ListOfStores)
+                    @Html.DropDownListFor(m => Model.StoreName, Model.ListOfStores, "Select Stores")
                 </td>
             </div>
 
             @Html.HiddenFor(m => Model.CustomerId)
             @Html.HiddenFor(m => Model.OrderID)
-            @Html.HiddenFor(m => Model.OrderTime)
-            @Html.HiddenFor(m => Model.StoreLocation)
 
             <div class="form-group">
                 <td>
-                    @Html.DropDownList("GameOrderViewModel", Model.ListOfGames)
+                        @Html.DropDownListFor(m => Model.GameName, Model.ListOfGames, "Select Game")
                 </td>
             </div>
+
             <div class="form-group">
                 <label asp-for="Quantity" class="control-label"></label>
-                <input asp-for="Quantity" class="form-control" />
-                <span asp-validation-for="Quantity" class="text-danger"></span>
+                @Html.DropDownListFor(m => Model.Quantity, Enumerable.Range(0, 15).Select(x => new SelectListItem { Text = x.ToString(), Value = x.ToString() }))
+
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

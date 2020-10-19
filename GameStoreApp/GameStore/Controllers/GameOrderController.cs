@@ -22,18 +22,6 @@ namespace GameStore.WebUI.Controllers
         // GET: GameOrderController
         public ActionResult Index()
         {
-            //IEnumerable<GameOrder> gameOrders = Repo.GetGameOrders();
-
-            //IEnumerable<GameOrderViewModel> viewModels = gameOrders.Select(x => new GameOrderViewModel
-            //{ 
-            //    OrderID = x.OrderID,
-            //    CustomerId = x.CustomerID,
-            //    StoreId = x.StoreID,
-            //    OrderTime = x.OrderTime,
-            //    Customer = Repo.GetCustomerById(x.CustomerID),
-            //    StoreLocation = Repo.GetStoreById(x.StoreID)
-            //});
-
             return View();
         }
 
@@ -63,10 +51,6 @@ namespace GameStore.WebUI.Controllers
         // GET: GameOrderController/Create
         public ActionResult Create([FromQuery]int customerId)
         {
-            var order = Repo.GetRecentGameOrderByCustomerId(customerId);
-            var storeId = Repo.GetStoreIdFromOrderId(order.OrderID);
-            var game = Repo.GetGameById(order.GameID);
-
             var storeList = new List<SelectListItem>();
             foreach (var store in Repo.GetStoreLocations())
             {
@@ -88,9 +72,7 @@ namespace GameStore.WebUI.Controllers
 
             var gameOrder = new GameOrderViewModel
             {
-                GameID = game.GameID,
                 Customer = Repo.GetCustomerById(customerId),
-                StoreLocation = Repo.GetStoreById(storeId),
                 ListOfGames = gameList,
                 CustomerId = customerId,
                 ListOfStores = storeList,
@@ -103,15 +85,25 @@ namespace GameStore.WebUI.Controllers
         // POST: GameOrderController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(GameOrderViewModel viewModel)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                GameOrder gameOrder = new GameOrder();
+                gameOrder.CustomerID = viewModel.CustomerId;
+                gameOrder.StoreID = Repo.GetStoreByName(viewModel.StoreName).StoreID;
+                gameOrder.OrderTime = DateTime.Now;
+                gameOrder.GameID = Repo.GetGameByGameName(viewModel.GameName).GameID;
+                gameOrder.Quantity = viewModel.Quantity;
+
+                Repo.AddOrder(gameOrder);
+                Repo.Save();
+
+                return RedirectToAction("Index", "Customer");
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index", "Customer");
             }
         }
 

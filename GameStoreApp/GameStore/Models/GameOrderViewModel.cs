@@ -23,6 +23,7 @@ namespace GameStore.WebUI.Models
         public List<SelectListItem> ListOfStores { get; set; }
 
         public StoreLocation StoreLocation { get; set; }
+        public string StoreName { get; set; }
 
         [Display(Name = "Order Time")]
         public DateTime OrderTime { get; set; }
@@ -32,12 +33,11 @@ namespace GameStore.WebUI.Models
         public IEnumerable<SelectListItem> ListOfGames { get; set; }
 
         public Game Game { get; set; }
+        public string GameName { get; set; }
 
 
         [Display(Name = "Quantity")]
         public int Quantity { get; set; }
-
-        public List<int> QuantityList { get; set; }
 
         public int GameID { get; set; }
     }
